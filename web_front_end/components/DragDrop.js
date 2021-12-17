@@ -1,21 +1,32 @@
 export default function DragDrop() {
-    const handleImage = async (e) => {
-        e.preventDefault();
-
-        var image = document.getElementById("file").files[0];
-        var formData = new FormData();
-
-        formData.append('image', image);
-
+    const uploadImage = async (img) => {
         try {
-            await fetch('upload.js', {
+            const DOMAIN = 'http://localhost:5000'
+            const PATH = '/upload.js'
+
+            await fetch(DOMAIN + PATH, {
                 method: 'POST',
-                body: formData
+                body: img,
             });
         } catch (err) {
             console.log(err);
         }
     }
+
+    const handleImage = (e) => {
+        e.preventDefault();
+
+        var image = document.getElementById("file").files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener('load', () => {
+            var img_raw = reader.result;
+            uploadImage(img_raw);
+        });
+
+        reader.readAsDataURL(image);
+    }
+
     return (
         <div className="w-full h-[85%] flex justify-center items-center" id="prev">
             <form onSubmit={handleImage}>
