@@ -1,0 +1,14 @@
+{
+  "name": "web_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "upload.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bennett Anderson",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "zeromq": "^6.0.0-beta.6"
+  }
+}
