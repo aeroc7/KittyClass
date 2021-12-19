@@ -1,15 +1,19 @@
-export default function DragDrop() {
+export default function DragDrop({ onResponse }) {
     const uploadImage = async (img) => {
         try {
-            const DOMAIN = 'http://localhost:5000'
+            const DOMAIN = `http://${process.env.NEXT_PUBLIC_SERVER_IP}:5000`
             const PATH = '/upload.js'
 
-            await fetch(DOMAIN + PATH, {
+            let res = await fetch(DOMAIN + PATH, {
                 method: 'POST',
                 body: img,
             });
+
+            let text_data = await res.text()
+            onResponse(text_data.toString());
         } catch (err) {
             console.log(err);
+            onResponse(err.toString());
         }
     }
 
@@ -29,9 +33,9 @@ export default function DragDrop() {
 
     return (
         <div className="w-full h-[85%] flex justify-center items-center" id="prev">
-            <form onSubmit={handleImage}>
-                <input type="file" id="file" accept=".png,.jpg,.webp" className="bg-text py-2 rounded-lg px-2" />
-                <button type="submit" className="bg-text ml-5 px-2 py-2 rounded-lg">ENTER</button>
+            <form onSubmit={handleImage} className="flex flex-col sm:flex-row">
+                <input type="file" id="file" accept=".png,.jpg,.webp" className="bg-background border-2 border-text text-text py-4 rounded-lg px-2 text-right font-roboto text-md" />
+                <button type="submit" className="flex bg-background border-2 border-text text-text sm:ml-2 mt-2 sm:mt-0 px-2 py-4 rounded-lg font-roboto text-md justify-center items-center">SUBMIT</button>
             </form>
         </div>
     )
