@@ -5,6 +5,8 @@ import { useState } from 'react';
 
 export default function Index() {
     const [resulting_data, setData] = useState("Upload an image of a cat or dog");
+    const [imgAvailable, updateImgStatus] = useState(false);
+    const [imgSrc, updateImgSrc] = useState("");
 
     const updateContent = (data) => {
         var type = data.split(',')[0];
@@ -12,6 +14,11 @@ export default function Index() {
         var fmtd_data = `Predicted image is a ${type} with ${conf}% confidence.`;
 
         setData(fmtd_data);
+    };
+
+    const updateImage = (img) => {
+        updateImgStatus(true);
+        updateImgSrc(img);
     };
 
     return (
@@ -23,8 +30,15 @@ export default function Index() {
                 </Head>
                 <div>
                     <Logo />
-                    <div className="pt-20">
-                        <DragDrop onResponse={updateContent} />
+                    <div className="pt-10">
+                        <DragDrop onImage={updateImage} onResponse={updateContent} />
+                    </div>
+                    <div className="block ml-auto mr-auto max-w-[290px] sm:max-w-sm pt-10">
+                        {
+                        imgAvailable && (
+                            <img src={imgSrc} alt="Uploaded image" className="rounded-lg" />
+                        )
+                        }
                     </div>
                     <div className="flex justify-center pt-7">
                         <div className="block text-white text-center font-roboto max-w-xs sm:max-w-full">{`${resulting_data}`}</div>

@@ -1,4 +1,4 @@
-export default function DragDrop({ onResponse }) {
+export default function DragDrop({ onImage, onResponse }) {
     const uploadImage = async (img) => {
         try {
             const DOMAIN = `http://${process.env.NEXT_PUBLIC_SERVER_IP}:5000`
@@ -25,6 +25,7 @@ export default function DragDrop({ onResponse }) {
 
         reader.addEventListener('load', () => {
             var img_raw = reader.result;
+            onImage(img_raw);
             uploadImage(img_raw);
         });
 
