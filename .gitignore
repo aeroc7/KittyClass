@@ -6,3 +6,4 @@ dataset/
 dataset.zip
 __pycache__
 .env
+model.pt
